@@ -1,35 +1,38 @@
-location.href = "https://www.wikimedia.org/";
 
-allImageElements = document.querySelectorAll('img');
+function getWikiImages() {
+    location.href = "https://www.wikimedia.org/";
 
-wikiImages = [];
+    allImageElements = document.querySelectorAll('img');
 
-for (i = 0; i < allImageElements.length; i++){
-    wikiImages.push(allImageElements[i].src);
+    wikiImages = [];
+
+    for (i = 0; i < allImageElements.length; i++){
+        wikiImages.push(allImageElements[i].src);
+    }
+
+    wikiImages = JSON.stringify(wikiImages);
+
+    console.log(wikiImages);
 }
 
-wikiImages = JSON.stringify(wikiImages);
+document.addEventListener("DOMContentLoaded", function () {
 
-console.log(wikiImages);
+    var loadWikiImages = new XMLHttpRequest();
 
+    loadWikiImages.onreadystatechange = function () {
 
-// wikimedia images in JSON format
+        var imageLinks = JSON.parse(loadWikiImages.responseText);
+        var contentDiv = document.querySelector(".content");
 
-[
-    "https://www.wikimedia.org/static/images/project-logos/enwiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/enwiktionary.png",
-    "https://www.wikimedia.org/static/images/project-logos/wikiquote.png",
-    "https://www.wikimedia.org/static/images/project-logos/wikibooks.png",
-    "https://www.wikimedia.org/static/images/project-logos/wikisource.png",
-    "https://upload.wikimedia.org/wikinews/en/b/bc/Wiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/enwikiversity.png",
-    "https://www.wikimedia.org/static/images/project-logos/specieswiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/mediawikiwiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/wikidatawiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/commonswiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/wikivoyage.png",
-    "https://www.wikimedia.org/static/images/project-logos/metawiki.png",
-    "https://www.wikimedia.org/static/images/project-logos/incubatorwiki.png",
-    "https://wikitech.wikimedia.org/w/images/c/cf/Labslogo_thumb.png",
-    "https://www.wikimedia.org/static/images/project-logos/foundationwiki.png"
-]
+        for (var i = 0; i < imageLinks.length; i++){
+
+            console.log([i]);
+            var newImage = document.createElement("img");
+            newImage.src = imageLinks[i];
+            contentDiv.appendChild(newImage);
+        }
+    }
+
+    loadWikiImages.open("GET","wikiImages.json",true);
+    loadWikiImages.send();
+});
