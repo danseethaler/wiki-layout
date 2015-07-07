@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     loadWikiImages.onreadystatechange = function () {
 
+        if (loadWikiImages.readyState !== 4) {
+            return;
+        }
+
         var imageLinks = JSON.parse(loadWikiImages.responseText);
         var contentDiv = document.querySelector(".content");
 
@@ -31,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             newImage.src = imageLinks[i];
             contentDiv.appendChild(newImage);
         }
-    }
+    };
 
     loadWikiImages.open("GET","wikiImages.json",true);
     loadWikiImages.send();
