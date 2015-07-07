@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (var i = 0; i < imageLinks.length; i++){
 
-            console.log([i]);
             var newImage = document.createElement("img");
             newImage.src = imageLinks[i];
             contentDiv.appendChild(newImage);
