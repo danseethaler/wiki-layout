@@ -30,9 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (var i = 0; i < imageLinks.length; i++){
 
+            var newDiv = document.createElement("div");
+            newDiv.className = "inlineDiv";
             var newImage = document.createElement("img");
             newImage.src = imageLinks[i];
-            contentDiv.appendChild(newImage);
+            newDiv.appendChild(newImage);
+            contentDiv.appendChild(newDiv);
         }
     };
 
